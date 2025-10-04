@@ -1,0 +1,28 @@
+html , * {
+   padding: 0 ; margin: 0 ;
+}
+body {
+    padding: 30px ;
+}
+.title {
+    font-size: 30px ;
+}
+button {
+    padding: 10px 20px ;
+    border: 0 ; outline: 0 ;
+    background-color: #309797;
+    border-radius: 6px ;
+    margin-inline-end: 15px ;
+    color: white ;
+}
+
+.fedback-count {
+    padding: 10px ;
+    background-color: #F0F0F0 ;
+    border-radius: 6px ;
+    margin-block: 8px ;
+    width: 200px ;
+    display: flex ;
+    justify-content: space-between;
+    align-items: center ;
+}
