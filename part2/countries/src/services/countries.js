@@ -7,18 +7,6 @@ const getAll = () => {
   return axios.get(baseUrl).then(res => res.data)
 }
 
-const create = (newPerson) => {
-  return axios.post(baseUrl, newPerson).then(res => res.data)
-}
-
-const remove = (id) => {
-  return axios.delete(`${baseUrl}/${id}`)
-}
-
-const update = (id, updatedPerson) => {
-  return axios.put(`${baseUrl}/${id}`, updatedPerson).then(res => res.data)
-}
-
 
 const getDetails = (id) => {
   return axios.get(`https://restcountries.com/v3.1/alpha/${id}`)
@@ -31,4 +19,4 @@ const getWeather = (city) => {
     .then(response => response.data)
 }
 
-export default { getAll, create, remove, update, getDetails, getWeather }
+export default { getAll, getDetails, getWeather }
