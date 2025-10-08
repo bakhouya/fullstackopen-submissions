@@ -19,10 +19,10 @@ const NotificationBar = ({ message, type }) => {
     color: type === 'success' ? 'green' : 'red',
     background: type === 'success' ? '#50e4a6ff' : '#f0b0b0ff',
     fontSize: 20,
-    border: `2px solid ${type === 'success' ? 'green' : 'red'}`,
     borderRadius: 5,
     padding: 10,
-    marginBottom: 10,
+    marginBottom: 15,
+    marginTop: 15,
   }
 
   return <div style={style}>{message}</div>

@@ -64,8 +64,9 @@ function App() {
               setPersons(persons.concat(returnedPerson))
               setFormData({ name: '', number: '' })
               showNotification(`Added ${returnedPerson.name}`, 'success')
-            }).catch(() => {
-              showNotification(`Failed to add ${formData.name}. Please try again later.`,'error')
+            }).catch(error => {
+                const backendMessage = error.response?.data?.error || 'Failed to add person.'
+                showNotification(backendMessage, 'error')
             })
         }
 
@@ -112,18 +113,20 @@ function App() {
     // ================================================================================
     // Render app: title, filter, form, and list of persons
     return (
-      <>
-      <h1>PhoneBook</h1>
+      <div className='container-app'>
+        <div className="box-form">
+        <h1>PhoneBook</h1>
+            <NotificationBar  message={notification?.message} type={notification?.type} />
 
-      <NotificationBar  message={notification?.message} type={notification?.type} />
+            <Filter value={search} change={(e) => setSearch(e.target.value)} />
+            <div>Add new person</div>
+            <PersonForm form={formData} change={handleChangeField} submit={handleSubmit} />
+         </div>
 
-      <Filter value={search} change={(e) => setSearch(e.target.value)} />
+        <div className="persons_list"><Persons persons={filteredPersons} deleteItem={handleDelete}/></div>
+        
 
-      <PersonForm form={formData} change={handleChangeField} submit={handleSubmit} />
-
-      <Persons persons={filteredPersons} deleteItem={handleDelete}/>
-
-      </>
+      </div>
     )
   // ================================================================================
 }
