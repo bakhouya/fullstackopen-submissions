@@ -1,10 +1,13 @@
 // ===================================================================================
+const dotenv =  require('dotenv').config()
 const express = require('express')
 const path = require('path')
 const app = express()
 const morgan = require('morgan')
 const cors = require('cors')
-// const path = require('path')
+const Person = require('./models/person')
+
+// ==================== Middleware ====================
 app.use(cors())
 app.use(express.json())
 app.use(morgan('tiny'))
@@ -23,44 +26,15 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :b
 
 
 
-
-
-// ===================================================================================
-// default list persons 
-let persons = [
-    { 
-      id: 1,
-      name: "Arto Hellas", 
-      number: "040-123456"
-    },
-    { 
-      id: 2,
-      number: "39-44-5323523" ,
-      name: "Ada Lovelace", 
-    },
-    { 
-      id: 3,
-      name: "Dan Abramov", 
-      number: "12-43-234345"
-    },
-    { 
-      id: 4,
-      name: "Mary Poppendieck", 
-      number: "39-23-6423122"
-    }
-]
-// ===================================================================================
-
-
 // ===================================================================================
 //  get info peson statistique
-app.get('/info', (request, response) => {
-  const count = persons.length  
-  const date = new Date()       
-  response.send(`
-    <p>Phonebook has info for ${count} people</p>
-    <p>${date}</p>
-  `)
+app.get('/info', async (req, res) => {
+    const count = await Person.countDocuments({})
+    const date = new Date()
+    res.send(`
+      <p>Phonebook has info for ${count} people</p>
+      <p>${date}</p>
+    `)
 })
 // ===================================================================================
 
@@ -68,66 +42,117 @@ app.get('/info', (request, response) => {
 // ===================================================================================
 //  create new person and check if this name person is ewist for unique 
 //  if person name and person number empty return status 400 and message error
-app.post('/api/persons', (request, response) => {
-    const person = request.body
+app.post('/api/persons', (request, response, next) => {
+  const body = request.body
 
-    if (!person.name || !person.number) {
-        return response.status(400).json({ error: 'Name or number missing' })
-    }
+  if (!body.name || !body.number) {
+    return response.status(400).json({ error: 'name or number missing' })
+  }
 
-    const existing = persons.find(p => p.name === person.name)
-    if (existing) {
-        return response.status(400).json({ error: 'Name must be unique' })
-    }
+  Person.findOne({ name: body.name })
+    .then(existingPerson => {
+      if (existingPerson) {
+        existingPerson.number = body.number
+        return existingPerson.save().then(updatedPerson => {
+          response.json(updatedPerson)
+        })
+      } else {
+        const person = new Person({
+          name: body.name,
+          number: body.number,
+        })
 
-    const maxId = persons.length > 0
-        ? Math.max(...persons.map(p => p.id))
-        : 0
-
-    const newPerson = { ...person, id: maxId + 1 }
-
-    persons = persons.concat(newPerson)
-    response.status(201).json(newPerson)
+        person.save()
+          .then(savedPerson => response.status(201).json(savedPerson))
+          .catch(error => next(error))
+      }
+    })
+    .catch(error => next(error))
 })
 // ===================================================================================
 
-
 // ===================================================================================
-//  get singale person by ID 
-app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(person => person.id === id)   
-    if (person) {
-        response.json(person)
-    } else {
-        response.status(404).json({ error: 'Person not found' }).end()
-    }
+//  get singale person by id
+app.get('/api/persons/:id', (request, response, next) => {
+  Person.findById(request.params.id).then(person => {
+      if (person) {
+          response.json(person)
+      } else {
+          response.status(404).end()
+      }
+    }).catch(error => next(error))
 })
-// ===================================================================================
 
+// ===================================================================================
 
 // ===================================================================================
 //  delete person by id
-app.delete('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    const person = persons.find(p => p.id === id) // check if this id person exist
-    //    if not exist return status 404 and error message 
-    if (!person) {
-        return response.status(404).json({ error: 'Person not found' })
-    }
-    //  if exist remove it and return status 204 
-    persons = persons.filter(p => p.id !== id)
-    response.status(204).end()
+app.delete('/api/persons/:id', (request, response, next) => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 })
 // ===================================================================================
-
 
 // ===================================================================================
 //  get all persons
 app.get('/api/persons', (request, response) => {
-    response.json(persons)
+  Person.find({}).then(person => {
+    response.json(person)
+  })
 })
 // ===================================================================================
+
+// ===================================================================================
+// update item person by id
+app.put('/api/persons/:id', (request, response, next) => {
+  const { name, number } = request.body
+
+  Person.findById(request.params.id)
+    .then(person => {
+      if (!person) {
+        return response.status(404).end()
+      }
+
+      person.name = name
+      person.number = number
+
+      return person.save().then((updatedPerson) => {
+        response.json(updatedPerson)
+      })
+    })
+    .catch(error => next(error))
+})
+// ===================================================================================
+
+
+
+
+
+
+// ===================================================================================
+//  handle error when i want delete or get or update item not exists in databse
+const unknownEndpoint = (request, response) => {
+  response.status(404).send({ error: 'unknown endpoint' })
+}
+app.use(unknownEndpoint)
+const errorHandler = (error, request, response, next) => {
+    console.error(error.message)
+
+    if (error.name === 'CastError') {
+      return response.status(400).send({ error: 'malformatted id' })
+    } else if (error.name === 'ValidationError') {
+      return response.status(400).json({ error: error.message })
+    }
+    next(error)
+}
+app.use(errorHandler)
+// ===================================================================================
+
+
+
 
 
 // ===================================================================================
