@@ -1,0 +1,35 @@
+
+
+// ===================================get all users================================================
+###
+GET http://localhost:3003/api/users
+
+
+// =======================================create new user============================================
+###
+POST http://localhost:3003/api/users
+content-type: application/json
+
+ {
+    "username": "mostafa",
+    "name": "Superuser",
+    "password": "12345"
+}
+
+// =======================================update user============================================
+###
+PUT http://localhost:3003/api/users/68e7aa7d7bb3222bf7504ebb
+content-type: application/json
+
+ {
+    "username": "mostafa",
+    "name": "Superuser",
+    "password": "12345"
+}
+
+
+// ================================get item user by id===================================================
+###
+GET http://localhost:3003/api/users/68e81508ea72709a884fda75
+
+

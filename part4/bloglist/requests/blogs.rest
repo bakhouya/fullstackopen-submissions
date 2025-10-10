@@ -1,0 +1,44 @@
+
+
+// ===================================get all persons================================================
+###
+GET http://localhost:3003/api/blogs
+
+
+// =======================================create new person============================================
+###
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+  "title": "Structure of backend application, introduction to testing",
+  "author": "mostafa",
+  "url": "https://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing#exercises-4-1-4-2",
+  "likes": 120,
+  "userId" : "68e81508ea72709a884fda75"
+}
+
+// =======================================update person============================================
+###
+PUT http://localhost:3003/api/blogs/68e7aa7d7bb3222bf7504ebb
+content-type: application/json
+
+{
+  "title": "Structure of backend application, introduction to testing",
+  "author": "mostafa",
+  "url": "https://fullstackopen.com/en/part4/structure_of_backend_application_introduction_to_testing#exercises-4-1-4-2",
+  "likes": 125,
+  "user" : "68e81508ea72709a884fda75"
+}
+
+
+// ================================get item person by id===================================================
+###
+GET http://localhost:3003/api/blogs/68e6896684a67645dd046027
+
+
+// =====================================delete person==============================================
+###
+DELETE http://localhost:3003/api/blogs/68e6a96585da1c0ff530c341
+
+
