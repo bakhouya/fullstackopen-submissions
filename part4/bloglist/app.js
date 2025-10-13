@@ -1,5 +1,7 @@
-const express = require('express')
+
+express = require('express')
 const mongoose = require('mongoose')
+const cors = require('cors')
 const config = require('./utils/config')
 const { info, error } = require('./utils/logger')
 
@@ -10,6 +12,7 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 
 const app = express()
+app.use(cors());
 // =================================================================
 // connections database
 info('connecting to', config.MONGODB_URI)

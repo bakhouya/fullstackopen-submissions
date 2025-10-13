@@ -17,8 +17,7 @@ loginRouter.post('/', async (request, response) => {
     })
   }
 
-  const userForToken = {
-    username: user.username,
+  const userForToken = {username: user.username,
     id: user._id,
   }
 
@@ -31,6 +30,25 @@ loginRouter.post('/', async (request, response) => {
   response
     .status(200)
     .send({ token, username: user.username, name: user.name })
+})
+
+loginRouter.get('/verify', (request, response) => {
+    const authorization = request.get('authorization')
+    if (!authorization || !authorization.startsWith('Bearer ')) {
+      return response.json({ valid: false })
+    }
+
+    const token = authorization.replace('Bearer ', '')
+
+    try {
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+      if (!decodedToken.id) {
+        return response.json({ valid: false })
+      }
+      response.json({ valid: true })
+    } catch (error) {
+      response.json({ valid: false })
+    }
 })
 
 module.exports = loginRouter

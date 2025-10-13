@@ -1,0 +1,147 @@
+body {
+    font-family : "segeo ui" ;
+}
+
+.header_app {
+    height: 80px ;
+    display: flex ;
+    justify-content : space-between ;
+    align-items: center ;
+    border-block-end: 1px solid rgb(224, 218, 218) ;
+    padding-inline: 40px ;
+}
+.title_page {
+    font-size: 30px ;
+    font-height: 700 ;
+    cursor: pointer ;
+}
+.actions_app {
+    display: flex ;
+    justify-content : space-between ;
+    align-items: center ;
+    gap: 20px ;
+}
+.btn_primary {
+    padding: 10px 20px ;
+    background-color: orange ;
+    color: white ;
+    border-radius: 30px ;
+}
+.container_app {
+    display: flex ;
+    justify-content : center ;
+    gap: 20px ;
+    min-height: calc(100vh - 80px);
+    padding: 20px ;
+    position: relative ;
+}
+.flex_center {
+    display: flex ;
+    justify-content : start ;
+    align-items: start ;
+    gap: 10px ;
+}
+
+
+/* ==========================cards blogs ====================== */
+.wrapper_blogs {
+    display: flex ;
+    justify-content : space-between ;
+    align-items: start ;
+    gap: 20px ;
+    flex-wrap: wrap ;
+    padding-top: 30px ;
+    padding-inline: 40px ;
+}
+.card_blog {
+    width: calc(100% / 2 - 10px) ;
+    background-color: #F9F9F9 ;
+    border-radius: 10px ;
+    padding: 10px ;
+    border: 1px solid rgb(231, 228, 228) ;
+}
+.header_card {
+    height: 200px ;
+    border-radius: 10px ;
+    background-color: #F0F0F0 ;
+    margin-bottom: 10px ;
+}
+.body_card {
+    display: flex ;
+    justify-content : space-between ;
+    align-items: center ;
+}
+.text-multiline {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;   
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.detials_blog {
+    display: grid ;
+    grid-template-columns: repeat(1, 1fr) ;
+    gap: 10px ;
+    border-top: 1px solid rgb(231, 228, 228) ;
+    margin-top: 10px ;
+    padding-top: 10px ;
+}
+/* ==========================cards blogs ====================== */
+
+
+
+/* ==========================form ====================== */
+.model_form {
+    position: fixed ;
+    inset: 0 ;
+    display: flex ;
+    justify-content : space-between ;
+    align-items: center ;
+    z-index: 100 ;
+    background-color :rgba(88, 83, 83, 0.49) ;
+}
+.auth_app {
+    display: flex ;
+    justify-content : center;
+    align-items: center ;
+    min-height: 100vh ;
+}
+.form_app {
+    background-color: #F9F9F9 ;
+    border-radius: 10px ;
+    padding: 20px ;
+    width: 450px ;
+    position: relative ;
+    border: 1px solid rgb(231, 228, 228) ;
+    margin: auto ;
+}
+.header_form_create {
+    display: flex ;
+    justify-content : space-between ;
+    align-items: center ;
+    border-bottom: 1px solid rgb(231, 228, 228)  ;
+    padding-bottom: 20px ;
+    margin-bottom: 20px ;
+}
+.field_input {
+    position: relative ;
+    margin-block-end : 15px ;
+}
+.field_input input {
+    margin-top: 6px ;
+    border: 0 ; outline: 0 ;
+    background : transparent ;
+    height: 45px ;
+    width: 100% ;
+    padding: 10px 20px ;
+    border-radius: 30px ;
+    border: 1px solid rgb(231, 228, 228) ;
+}
+.alert {
+    padding: 11px 15px ;
+    border-radius: 6px ;
+    background-color : green  ;
+    color: white ;
+    margin-bottom: 10px ;
+}
+/* ==========================form ====================== */

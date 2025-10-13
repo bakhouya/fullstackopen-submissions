@@ -1,0 +1,15 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "testes projects",
+  "main": "blog_app.spec.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:report": "playwright show-report"
+  },
+  "author": "mostafa",
+  "license": "ISC",
+  "devDependencies": {
+    "playwright": "^1.56.0"
+  }
+}
