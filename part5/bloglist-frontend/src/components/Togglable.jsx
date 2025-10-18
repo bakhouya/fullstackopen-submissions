@@ -1,9 +1,12 @@
 import { useState, forwardRef, useImperativeHandle } from 'react'
 
 const Togglable = forwardRef(({ buttonLabel, children }, ref) => {
-
+  // state: visible toggle
   const [visible, setVisible] = useState(false)
+
+  // handle hide visible toggle
   const hideWhenVisible = { display: visible ? 'none' : '' }
+  // handle show visible toggle
   const showWhenVisible = { display: visible ? '' : 'none' }
 
   const toggleVisibility = () => {setVisible(!visible)}

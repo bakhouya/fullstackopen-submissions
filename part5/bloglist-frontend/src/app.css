@@ -1,7 +1,32 @@
-body {
-    font-family : "segeo ui" ;
+:root {
+    --primary       :rgb(20, 138, 173) ;
+    --secoundary    :rgb(255, 142, 12) ;
+    --border        : #dce3e6 ;
+    --hover         : #d8dde2 ;
+
+    --txt-primary   : #27282b ;
+    --txt-secoundary: #454555 ;
+    --txt-grey      : #585568 ;
 }
 
+html, * {
+    padding: 0 ;
+    margin: 0 ;
+    box-sizing: border-box ;
+    font-family: "Montserrat", "comic sans MS","Epilogue" , sans-serif; 
+    text-transform: capitalize ;
+    -webkit-font-smoothing: antialiased ;
+    -moz-osx-font-smoothing: grayscale ;
+    font-optical-sizing: auto;
+    font-style: normal ;
+}
+body {
+    font-size: 17px ;
+    color: var(--txt-secoundary)
+}
+.container_primary {
+    padding-inline: 40px ;
+}
 .header_app {
     height: 80px ;
     display: flex ;
@@ -23,7 +48,7 @@ body {
 }
 .btn_primary {
     padding: 10px 20px ;
-    background-color: orange ;
+    background-color: var(--primary) ;
     color: white ;
     border-radius: 30px ;
 }
@@ -41,6 +66,13 @@ body {
     align-items: start ;
     gap: 10px ;
 }
+.box_toggle_auth {
+    display: flex ;
+    justify-content : center ;
+    align-items: center ;
+    margin-top: 20px ;
+}
+
 
 
 /* ==========================cards blogs ====================== */
@@ -55,15 +87,14 @@ body {
 }
 .card_blog {
     width: calc(100% / 2 - 10px) ;
-    background-color: #F9F9F9 ;
     border-radius: 10px ;
     padding: 10px ;
-    border: 1px solid rgb(231, 228, 228) ;
+    border: 1px solid var(--border);
 }
 .header_card {
     height: 200px ;
     border-radius: 10px ;
-    background-color: #F0F0F0 ;
+    background-color: #F9F9F9 ;
     margin-bottom: 10px ;
 }
 .body_card {
@@ -86,8 +117,86 @@ body {
     margin-top: 10px ;
     padding-top: 10px ;
 }
+@media (max-width: 600px) {
+    .wrapper_blogs, .header_app, .container_primary  {
+        padding-inline: 20px ;
+    }
+    .card_blog {
+        width: calc(100%) ;
+    }
+}
 /* ==========================cards blogs ====================== */
 
+
+.hero_blog .container_primary{
+    display: flex ;
+    justify-content: center ;
+    align-items: center ;
+    height: calc(100vh - 120px) ;
+    position: relative ;
+}
+.content_hero  {
+    text-align: center ;
+    max-width: 70% ;
+}
+.title_hero {
+    font-size: 70px ;
+    font-weight: bold ;
+    color: var(--primary) ;
+}
+.box_search {
+    height: 60px ;
+    border: 2px solid var(--border) ;
+    position: relative ;
+    border-radius: 30px ;
+    margin-top: 30px ;
+    overflow: hidden ;
+}
+.input_search {
+    height: 100% ; width: 100% ;
+    border: 1px ; outline: 0 ;
+    background: transparent ;
+    padding-inline: 20px ;
+}
+.btn_search {
+    position: absolute ;
+    inset-inline-end: 15px ;
+    inset-block-start: 15px ;
+}
+
+
+
+/* ==========================auth ====================== */
+.btn_auth {
+    padding: 11px 20px ;
+    background-color: var(--primary) ;
+    color: white ;
+    border-radius: 30px ;
+    width: 100% ;
+
+}
+.btn_auth:hover {
+    background-color:  var(--secoundary) 
+}
+.auth_app {
+    display: flex ;
+    justify-content : center;
+    align-items: center ;
+    min-height: 100vh ;
+}
+.header_form_auth {
+    display: flex ;
+    justify-content : center;
+    align-items: center ;
+    margin-bottom: 20px ;
+}
+.toggle_show_password {
+    position: absolute ;
+    inset-inline-end: 15px ;
+    inset-block-end: 12px ;
+
+}
+/* ==========================auth ====================== */
 
 
 /* ==========================form ====================== */
@@ -100,19 +209,13 @@ body {
     z-index: 100 ;
     background-color :rgba(88, 83, 83, 0.49) ;
 }
-.auth_app {
-    display: flex ;
-    justify-content : center;
-    align-items: center ;
-    min-height: 100vh ;
-}
 .form_app {
-    background-color: #F9F9F9 ;
+    background-color: white ;
     border-radius: 10px ;
-    padding: 20px ;
+    padding: 25px ;
     width: 450px ;
     position: relative ;
-    border: 1px solid rgb(231, 228, 228) ;
+    border: 1px solid var(--border);
     margin: auto ;
 }
 .header_form_create {
@@ -131,11 +234,15 @@ body {
     margin-top: 6px ;
     border: 0 ; outline: 0 ;
     background : transparent ;
-    height: 45px ;
+    height: 48px ;
     width: 100% ;
     padding: 10px 20px ;
     border-radius: 30px ;
-    border: 1px solid rgb(231, 228, 228) ;
+    border: 1px solid var(--border);
+    transition: all 0.5s ease-in-out ;
+}
+.field_input input:focus {
+    border: 1px solid var(--primary)  ;
 }
 .alert {
     padding: 11px 15px ;
@@ -145,3 +252,38 @@ body {
     margin-bottom: 10px ;
 }
 /* ==========================form ====================== */
+
+/* ==========================leading ====================== */
+.lead_primary {
+    position: fixed ;
+    inset: 0 ;
+    display: flex ;
+    justify-content : center ;
+    align-items: center ;
+    z-index: 120 ;
+    background-color :rgba(88, 83, 83, 0.49) ;
+}
+.leading {
+    width: 60px ;
+    height: 60px ;
+    border: 7px solid ;
+    border-color : var(--primary) var(--border) var(--border)  var(--border)  ;
+    border-radius: 50% ;
+    animation: spin 1s linear infinite ;
+}
+@keyframes spin {
+    0% {transform: rotate(0deg)}
+    100% {transform: rotate(360deg)}
+}
+/* ==========================leading ====================== */
+
+.alert_message {
+    position : fixed ;
+    left: 50% ;
+    transform: translateX(-50%) ;
+    min-width: 400px ;
+    top: 15px ;
+}
+.text_center {
+    text-align: center ;
+}

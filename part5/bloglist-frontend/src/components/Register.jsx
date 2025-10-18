@@ -3,43 +3,45 @@ import { useState } from 'react'
 import Alert from './alert'
 import Leading from './Lead'
 import playClickSound from '../utils/sonClick'
-const LoginForm = ({ onLogin }) => {
-  // State: moginData username and password
-  const [loginData, setLoginData] = useState({ username: '', password: '' })
-  // State: alert accept message and type (success, error)
+const RegisterForm = ({ onRegister }) => {
+  // State: register data 
+  const [registerData, setRegisterData] = useState({ username: '', name: '', password: '' })
+  // State: alert message and type 
   const [alert, setAlert] = useState(null)
   // state: toggle password accept string password or text
   const [typePassword, setTypePassword] = useState("password")
   const [leading, setLeading] = useState(false)
+
   // ================================================================================
-  // handle change data fields to state loginData
-  const handleLoginData = (e) => {
+  // live change data from input field to state registerData from atrr name 
+  const changeValueData = (e) => {
     const { name, value } = e.target
-    setLoginData({ ...loginData,[name]: value })
+    setRegisterData({ ...registerData,[name]: value })
   }
   // ================================================================================
 
   // ================================================================================
-  // when submit form gived data username, password from state loginData 
-  // validate if username and password empty call alert function 
-  // if not empty send data to function onLogin ../app.js 
-  const handleLoginBlog = async (e) => {
+  // gived data field from registerDtata 
+  // validate username, name, password if empty call alert function and gived message and type error
+  // if not empty called function from ../app.js => onRegister and gived data 
+  // when seved data emty state registerData
+  const handleRegister = async (e) => {
     e.preventDefault()
     playClickSound()
-    const { username, password } = loginData
-    if (!username || !password ) {
-      showAlert('username and password are required', 'error')
+    const { username, name, password } = registerData
+    if (!username || !name || !password ) {
+      showAlert('username, name and password are required', 'error')
     }else {
       try {
         setLeading(true)
-        setTimeout(() => {setLeading(false)}, 3000)
-        await onLogin({ username, password })
-        setLoginData({ username: '', password: '' })
+        setTimeout(() => {setLeading(false)}, 2000)
+        await onRegister({ username, name, password })
+        setRegisterData({ username: '', name: '', password: '' })
       } catch {
-        showAlert('password or email not correct.', 'error')
+        showAlert('some error happen for creation.', 'error')
       }
     }
-
+    
   }
   // ================================================================================
 
@@ -62,35 +64,47 @@ const LoginForm = ({ onLogin }) => {
   }
   // ================================================================================
 
+
+
   return (
     <div className="">
-      <form onSubmit={handleLoginBlog} className="form_app">
+      <form onSubmit={handleRegister} className="form_app">
+        
+        {/* if any alert return her  */}
         {alert && <Alert message={alert.message} type={alert.type} />}
 
-        {/* username field */}
+        {/* field username user */}
         <div className="field_input">
           <label>
             <div className=""> username</div>
-            <input type="text"  value={loginData.username} onChange={handleLoginData} name="username" placeholder="username"/>
+            <input type="text"  value={registerData.username} onChange={changeValueData} name="username" placeholder="username"/>
           </label>
         </div>
-        {/* password field */}
+        {/* field name user  */}
+        <div className="field_input">
+          <label>
+            <div className="">name </div>
+            <input type="text"  value={registerData.name} onChange={changeValueData} name="name" placeholder="name"/>
+          </label>
+        </div>
+        {/*  field password user */}
         <div className="field_input">
           <label>
             <div className="">password</div>
-            <input type={typePassword} value={loginData.password} onChange={handleLoginData} name="password" placeholder="password"/>
+            <input type={typePassword} value={registerData.password} onChange={changeValueData} name="password" placeholder="password"/>
             <button className="toggle_show_password" type='button' onClick={handleToggleTypePassword}>
                 {typePassword === "password" ? "show" : "hide"} 
             </button>
           </label>
         </div>
-        {/* login button  */}
+        {/*  submit button */}
         <div className="flex_center">
-            <button type="submit" className="btn_auth">login</button>
+            <button type="submit" className="btn_auth">Register</button>
         </div>
+
       </form>
       {leading && <Leading />}
     </div>
   )
 }
-export default LoginForm
+export default RegisterForm
