@@ -65,7 +65,7 @@ const App = () => {
   // handle login user to the blog 
   // // call function login from services loginService path ./services/login => login
   // if login successfully I saved data user in the localStorage 
-  // send token to services setToken path ./services/blog => setToken and gived to state user
+  // send token to services setToken path ./services/blog => setToken and gived to state user 
   // get all blogs from blogService path ./services/blog => getAll and gived to to state blogs 
   const handleLogin = async (loginData) => {
     const user = await loginService.login(loginData)

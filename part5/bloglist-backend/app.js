@@ -8,10 +8,12 @@ const { info, error } = require('./utils/logger')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
+const commentsRouter = require('./controllers/comments')
 
 const middleware = require('./utils/middleware')
 
 const app = express()
+const path = require('path')
 app.use(cors());
 // =================================================================
 // connections database
@@ -33,6 +35,8 @@ app.use(middleware.userExtractor)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/blogs', blogsRouter)
+app.use('/api/blogs', commentsRouter)
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')))
 // =============================routers====================================
 
 // =============================middleware====================================

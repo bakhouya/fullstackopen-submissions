@@ -1,17 +1,18 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const multer = require('multer')
+const path = require('path')
 const { userExtractor } = require('../utils/middleware')
 
-// =================================================================
-// GET Token for doing anything
-// getTokenFrom = request => {
-//   const authorization = request.get('authorization')
-//   if (authorization && authorization.startsWith('Bearer ')) {
-//     return authorization.replace('Bearer ', '')
-//   }
-//   return null
-// }
-// =================================================================
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/') 
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)) 
+  }
+})
+const upload = multer({ storage })
 
 
 // =================================================================
@@ -27,7 +28,7 @@ blogsRouter.get('/', async (request, response) => {
 // GET item blog by ID if not found return status 404
 blogsRouter.get('/:id', async (request, response, next) => {
   try {
-    const blog = await Blog.findById(request.params.id).populate('user')
+    const blog = await Blog.findById(request.params.id).populate('user').populate('comments')
     // populate for get data user for this blog
     if (blog) {
       response.json(blog)
@@ -43,7 +44,7 @@ blogsRouter.get('/:id', async (request, response, next) => {
 // else create new blog and return status 201 and the new blog
 // if likes is missing set it to 0
 // add try / cache to handle errors
-blogsRouter.post('/', userExtractor, async (request, response, next) => {
+blogsRouter.post('/', upload.single('image'), userExtractor, async (request, response, next) => {
   try {
     const user = request.user
 
@@ -55,11 +56,13 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
     }
 
     const blog = new Blog({
-      title: request.body.title,
-      author: request.body.author,
-      url: request.body.url,
-      likes: request.body.likes || 0,
-      user: user._id
+        title: request.body.title,
+        description: request.body.description,
+        image: request.file ? `/uploads/${request.file.filename}` : null,
+        author: request.body.author,
+        url: request.body.url,
+        likes: request.body.likes || 0,
+        user: user._id
     })
 
     const savedBlog = await blog.save()
