@@ -16,7 +16,7 @@ export default function Main() {
                     <Outlet /> 
                 </Container>
             </main>
-            <footer className="text-center text-muted py-3 border-top mt-5">
+            <footer className="text-center text-muted py-3 footer_app mt-5">
                 <Container>
                     <Footer />
                 </Container>

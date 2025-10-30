@@ -5,6 +5,8 @@ import { formatDistanceToNow } from 'date-fns'
 import Delete from './Delete'
 import Like from './Like'
 import { Link } from "react-router-dom"
+import API_URL from "../routers/api"
+
 
 function CardBlog(props) {
   const { user } = useAuth();
@@ -41,7 +43,7 @@ function CardBlog(props) {
                 </div>
               </div>
 
-              <img src={`http://localhost:3003${blog.image}`} alt={blog.title} className='header_card'/>
+              <img src={`${API_URL}${blog.image}`} alt={blog.title} className='header_card'/>
 
               <div className="d-flex flex-column body_card">
                 <div className="flex_between">

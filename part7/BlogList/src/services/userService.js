@@ -1,9 +1,9 @@
 import axios from 'axios'
 import API_URL from '../routers/api'
 
-const loginUrl = `${API_URL}/login`
-const registerUrl = `${API_URL}/users`
-const verifyUrl = `${API_URL}/verify`
+const loginUrl = `${API_URL}/api/login`
+const registerUrl = `${API_URL}/api/users`
+const verifyUrl = `${API_URL}/api/verify`
 
 // ================================================================================
 // register 

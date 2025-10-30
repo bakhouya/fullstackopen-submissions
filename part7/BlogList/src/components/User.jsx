@@ -25,7 +25,11 @@ function Users() {
                         <Link to={'/users/'+user.id} className="h-100 pointer card user_body">
                             <div className="">
                                 <div className="avatar_user">
-                                    <img src={'/images/icon.png'} alt="" />
+                                    {user.username ? (
+                                        user.username.charAt(0).toUpperCase()
+                                    ) : (
+                                        <img src={'/images/icon.png'} alt="" />
+                                    )}
                                 </div>
                                 <div className='text-multiline txt_title'>{user.name}  {user.blogs.length}</div>
                             </div>

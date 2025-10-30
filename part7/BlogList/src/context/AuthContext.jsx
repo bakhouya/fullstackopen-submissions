@@ -16,15 +16,11 @@ export const AuthProvider = ({ children }) => {
         setUser(parsedUser);
         setToken(parsedUser.token);
         blogService.setToken(parsedUser.token);
-
-        // validateToken(parsedUser.token);
       } catch (error) {
         console.error("Failed to parse stored user:", error);
         localStorage.removeItem("USER_AUTH");
       }
-    }else {
-      setLoading(false)
-    }
+    }else {setLoading(false)}
   }, []);
   
   const validateToken = async (token) => {
@@ -40,19 +36,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const handletoken = () => {
+        const storedUser = localStorage.getItem("USER_AUTH");
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+        setToken(parsedUser.token);
+        blogService.setToken(parsedUser.token);
+  }
 
-  const login = (userData) => {
+  const login = (userData) => {   
     if (!userData) {
         console.error("Invalid login data:", userData);
-        return;
+        return ;
     }else {
         setUser(userData);
         setToken(userData.token);
         localStorage.setItem("TOKEN", userData.token);
         localStorage.setItem("USER_AUTH", JSON.stringify(userData));
-    }
-    
+        handletoken()
+    } 
   };
+
+  
   const logout = () => {
     setUser(null);
     setToken(null);

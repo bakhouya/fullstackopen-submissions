@@ -11,6 +11,8 @@ import Like from './Like'
 import Comment from './Comments'
 import AddComment from './AddComment'
 import Empty from './Empty'
+import API_URL from "../routers/api"
+
 const BlogItem = () => {
     const { id } = useParams()
     const { user } = useAuth()
@@ -40,24 +42,24 @@ const BlogItem = () => {
     if (!data) {
         return <div>No anecdote found.</div>
     }
-    const isOwner = user && user.id === data.user?.id  
+    const isOwner = user && user.username === data.user?.username  
     return (
         <section>
 
             <article className="h-100 pointer blog_item">
                
 
-                <img src={`http://localhost:3003${data.image}`} alt={data.title} className='header_card margin_bottom' />
+                <img src={`${API_URL}${data.image}`} alt={data.title} className='header_card margin_bottom' />
 
                 <div className="info_user header_item_blog">
-                    <div className="flex_start">
+                    <div className="flex_start w_100">
                         <div className="avatar_user">
                             {data.user.username ? (
-                            <div className="avatar_letter">
-                                {data.user.username.charAt(0).toUpperCase()}
-                            </div>
+                                <div className="avatar_letter">
+                                    {data.user.username.charAt(0).toUpperCase()}
+                                </div>
                             ) : (
-                            <img src={'/images/icon.png'} alt="" />
+                             <img src={'/images/icon.png'} alt="" />
                             )}
                         </div>
                         <div>
@@ -67,7 +69,8 @@ const BlogItem = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="flex_start">
+
+                    <div className="flex_start w_100 m_top">
                         <div className="btn_secoundary"><Like blog={data} /></div>
                         <div className="flex_start action_card pointer txt_base btn_secoundary">
                             <div>Comments</div>
@@ -75,10 +78,7 @@ const BlogItem = () => {
                         </div>
 
                         {isOwner && (
-                            <>
-                                <div className="slash"></div>
-                                <Delete blog={data.id} />
-                            </>
+                            <Delete blog={data.id} />
                         )}
                     </div>
                 </div>
@@ -87,11 +87,12 @@ const BlogItem = () => {
 
                 <div className="d-flex flex-column body_card">
                     <div className="flex_between">
-                    <Card.Title className='text-multiline txt_title'>{data.title}</Card.Title>
-                    {data.user && (<Card.Text className="txt_base">{data.author}</Card.Text>)}
+                        <Card.Title className='text-multiline txt_title'>{data.title}</Card.Title>
                     </div>
                     <Card.Text className="flex-grow-1 text-multiline2 txt_base margin_top_8">{data.description}</Card.Text>
-                    <Card.Text className="flex-grow-1 text-multiline2 txt_base margin_top_8">{data.url}</Card.Text>
+                    <div className="txt_base">Author: {data.author}</div>
+                    <Card.Text className="flex-grow-1 text-multiline2 txt_base margin_top_8">Url: {data.url}</Card.Text>
+
                 </div>
 
                 <div className="text-muted medium">

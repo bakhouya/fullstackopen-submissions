@@ -1,6 +1,4 @@
 const Footer = () => (
-    <div className="footer_app">
-        &copy; 2025 Blog App. Built with React-Bootstrap.
-    </div>
-  )
-  export default Footer
+    <div className="txt_base">&copy; 2025 Blog App. Built with React And Express.</div>
+)
+export default Footer

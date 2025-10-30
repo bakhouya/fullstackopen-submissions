@@ -10,6 +10,7 @@ const HeaderApp = () => {
         logout() 
         navigate("/login")
   };
+
   const avatar = user?.avatar || "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
 
   return (
@@ -38,7 +39,7 @@ const HeaderApp = () => {
                           <Image src={avatar} alt="user avatar" roundedCircle style={{ width: "34px", height: "34px", objectFit: "cover", marginRight: "8px",border: "2px solid #fff",}}/>
                         </span>}>
 
-                  <NavDropdown.Item as={Link} to="/profile" className="txt_base">
+                  <NavDropdown.Item as={Link} to={'/users/'+user?.id} className="txt_base">
                       Profile <span className="">{user?.name}</span>
                   </NavDropdown.Item>
                   <NavDropdown.Divider />

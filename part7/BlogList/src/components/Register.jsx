@@ -54,6 +54,13 @@ const Register = () => {
             username.setError(null)
         }
 
+        if (name.value.trim() === '') {
+            name.setError('Name Has Be Requered')
+            isValid = false 
+        }else{
+            name.setError(null)
+        }
+
         if (password.value.trim() === '') {
             password.setError('Passwod Has Be Requered')
             isValid = false 
@@ -106,9 +113,9 @@ const Register = () => {
         <div className="field_input">
           <label>
             <input type={typePassword} value={password.value} onChange={password.onChange} placeholder="Password"/>
-            <button className="toggle_show_password" type='button' onClick={handleToggleTypePassword}>
+            <div className="toggle_show_password" type='button' onClick={handleToggleTypePassword}>
                 {typePassword === "password" ? "show" : "hide"} 
-            </button>
+            </div>
           </label>
           {password.error && <div className="errorField"> {password.error } </div>}
         </div>

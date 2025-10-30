@@ -98,9 +98,9 @@ const Login = () => {
         <div className="field_input">
           <label>
             <input type={typePassword} value={password.value} onChange={password.onChange} placeholder="Password"/>
-            <button className="toggle_show_password" type='button' onClick={handleToggleTypePassword}>
+            <div className="toggle_show_password" type='button' onClick={handleToggleTypePassword}>
                 {typePassword === "password" ? "show" : "hide"} 
-            </button>
+            </div>
           </label>
           {password.error && <div className="errorField"> {password.error } </div>}
         </div>

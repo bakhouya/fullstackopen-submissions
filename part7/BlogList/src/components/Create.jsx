@@ -39,23 +39,23 @@ const Create = () => {
         playClickSound()
         if (validateForm()) {
             setLoading(true)
-            const formData = new FormData()
-            formData.append('title', title.value)
-            formData.append('author', author.value)
-            formData.append('description', description.value)
-            formData.append('url', url.value)
-            formData.append('likes', 0)
-            if (image.file) formData.append('image', image.file)
-            createMutation.mutate(formData)
+            // const formData = new FormData()
+            // formData.append('title', title.value)
+            // formData.append('author', author.value)
+            // formData.append('description', description.value)
+            // formData.append('url', url.value)
+            // formData.append('likes', 0)
+            // if (image.file) formData.append('image', image.file)
+            // createMutation.mutate(formData)
 
-            // createMutation.mutate({
-            //     title: title.value,
-            //     author: author.value,
-            //     description: description.value,
-            //     url: url.value,
-            //     likes: 0,
-            //     image: image.file
-            // })
+            createMutation.mutate({
+                title: title.value,
+                author: author.value,
+                description: description.value,
+                url: url.value,
+                likes: 0,
+                image: image.file
+            })
         }
     }
     // ================================================================================

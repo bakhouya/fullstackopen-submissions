@@ -1,8 +1,8 @@
 import axios from 'axios'
 import API_URL from '../routers/api'
 
-const baseUrl = `${API_URL}/blogs`
-const usersUrl = `${API_URL}/users`
+const baseUrl = `${API_URL}/api/blogs`
+const usersUrl = `${API_URL}/api/users`
 
 let token = null
 
